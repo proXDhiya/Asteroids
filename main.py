@@ -3,6 +3,7 @@ import sys
 from asteroidfield import AsteroidField
 from asteroid import Asteroid
 from player import Player
+from shot import Shot
 from constants import *
 
 def setup_pygame(width, height):
@@ -11,19 +12,20 @@ def setup_pygame(width, height):
     clock = pygame.time.Clock()
     return screen, clock
 
-def setup_groups(player):
+def setup_groups(player, shots):
     drawable = pygame.sprite.Group()
     updatable = pygame.sprite.Group()
-    astroids = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
     Player.containers = (drawable, updatable)
-    Asteroid.containers = (astroids, drawable, updatable)
+    Asteroid.containers = (asteroids, drawable, updatable)
     AsteroidField.containers = (updatable,)
+    Shot.containers = (shots, drawable, updatable)
 
     drawable.add(player)
     updatable.add(player)
 
-    return drawable, updatable, astroids
+    return drawable, updatable, asteroids
 
 def handle_events():
     for event in pygame.event.get():
@@ -31,7 +33,7 @@ def handle_events():
             return False
     return True
 
-def update_screen(screen, drawable, updatable, dt, player, asteroids):
+def update_screen(screen, drawable, updatable, dt, player, asteroids, shots):
     screen.fill("black")
 
     for entity in drawable:
@@ -44,13 +46,18 @@ def update_screen(screen, drawable, updatable, dt, player, asteroids):
         if player.collisions_detected(asteroid):
             print("Game over!")
             sys.exit()
+        for shot in shots:
+            if asteroid.collisions_detected(shot):
+                asteroid.split()
+                shot.kill()
 
     pygame.display.flip()
 
 def init_screen(width, height):
     screen, clock = setup_pygame(width, height)
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    drawable, updatable, asteroids = setup_groups(player)
+    shots = pygame.sprite.Group()
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, shots)
+    drawable, updatable, asteroids = setup_groups(player, shots)
     asteroid_field = AsteroidField()
 
     dt = 0
@@ -58,7 +65,7 @@ def init_screen(width, height):
 
     while running:
         running = handle_events()
-        update_screen(screen, drawable, updatable, dt, player, asteroids)
+        update_screen(screen, drawable, updatable, dt, player, asteroids, shots)
         dt = clock.tick(60) / 1000
 
 def main():
