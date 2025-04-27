@@ -12,6 +12,8 @@ I made a classic arcade-style game called **Asteroids**. You control a spaceship
 
 The asteroids split into smaller pieces when hit, and the goal is to survive as long as possible without crashing.
 
+![Gameplay demo](./assets/game-play.gif)
+
 ---
 
 ## How I Organized My Project
