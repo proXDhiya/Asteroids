@@ -1,14 +1,14 @@
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
-from circleshape import CircleShape
-from shot import Shot
 import pygame
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
+from entities.circleshape import CircleShape
+from entities.shot import Shot
 
 class Player(CircleShape):
     def __init__(self, x, y, shots_group):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shots = shots_group
-        self.shoot_cooldown = 0  # start with 0
+        self.shoot_cooldown = 0
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -45,7 +45,6 @@ class Player(CircleShape):
         if keys[pygame.K_s]:
             self.move(-dt)
 
-        # Shot cooldown i :)
         if self.shoot_cooldown > 0:
             self.shoot_cooldown -= dt
 
