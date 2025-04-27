@@ -185,6 +185,48 @@ Shots are small circles that fly straight in the direction the player was facing
 
 ---
 
+## Setup and Run the Game
+
+1. **Create a Virtual Environment:**
+
+   If you don't have a virtual environment set up, create one with the following command:
+
+   ```bash
+   python3 -m venv venv
+   ```
+
+2. **Activate the Virtual Environment:**
+
+   - On **Windows**, use:
+
+     ```bash
+     venv\Scripts\activate
+     ```
+
+   - On **Mac/Linux**, use:
+
+     ```bash
+     source venv/bin/activate
+     ```
+
+3. **Install the Required Packages:**
+
+   Install the required Python packages listed in `requirements.txt`:
+
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+4. **Run the Game:**
+
+   Now you can start the game by running:
+
+   ```bash
+   python3 main.py
+   ```
+ 
+---
+
 ## Some Space Humor to Keep You Going
 
 - Why don’t asteroids ever get invited to parties?  
